@@ -12,7 +12,9 @@ export default defineConfig({
       },
     },
   },
-
+  build: {
+    chunkSizeWarningLimit: 1000, // Specify your custom size limit in kilobytes
+  },
   plugins: [react()]
   // plugins: [vue({
   //   template: {
@@ -22,3 +24,5 @@ export default defineConfig({
   //   }
   // })]
 });
+
+
