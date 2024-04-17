@@ -163,7 +163,7 @@ export default function CreateListing() {
       if (formData.imageUrls.length < 1)
         return setError('You must upload at least one image');
       if (+formData.regularPrice < +formData.discountPrice)
-        return setError('Discount price must be lower than regular price');
+        return setError('price should be less than price without discount');
       setLoading(true);
       setError(false);
       const res = await fetch(`/api/listing/update/${params.listingId}`, {
@@ -284,38 +284,38 @@ export default function CreateListing() {
               <span>Offer</span>
             </div>
             </div>
-          <div className='flex flex-wrap gap-6'>
-            <div className='flex items-center gap-2'>
+            <div className="flex flex-wrap gap-6">
+            <div className="flex items-center gap-2">
               <input
-                type='number'
-                id='regularPrice'
-                min='10'
-                max='100000'
+                type="number"
+                id="discountPrice"
+                min="10"
+                max="100000"
                 required
-                className='p-3 border border-gray-300 rounded-lg'
+                className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
-                value={formData.regularPrice} 
+                value={formData.discountPrice}
               />
-              <div className='flex flex-col items-center'>
-                <p>Regular price</p>
-                <span className='text-xs'>(Rs / Hours)</span>
+              <div className="flex flex-col items-center">
+                <p> price</p>
+                <span className="text-xs">(Rs /day)</span>
               </div>
             </div>
             {formData.offer && (
-              <div className='flex items-center gap-2'>
+              <div className="flex items-center gap-2">
                 <input
-                  type='number'
-                  id='discountPrice'
-                  min='0'
-                  max='10000000'
+                  type="number"
+                  id="regularPrice"
+                  min="0"
+                  max="10000000"
                   required
-                  className='p-3 border border-gray-300 rounded-lg'
+                  className="p-3 border border-gray-300 rounded-lg"
                   onChange={handleChange}
-                  value={formData.discountPrice}
+                  value={formData.regularPrice}
                 />
-                <div className='flex flex-col items-center'>
-                  <p>Discounted price</p>
-                  <span className='text-xs'>($ / month)</span>
+                <div className="flex flex-col items-center">
+                  <p>price without Discount</p>
+                  <span className="text-xs">(Rs / day)</span>
                 </div>
               </div>
             )}

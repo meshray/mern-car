@@ -31,12 +31,12 @@ export default function CreateListing() {
     address: "",
     phoneNumber: "",
     city: "",
-    regularPrice: 0,
-    discountPrice: 0,
+    regularPrice: 10,
+    discountPrice: 5,
     type: "",
     CarNumber: "",
     offer: false,
-    DriverName: "",
+    DriverName: "Driver Name",
     experience: 0,
     available: false,
   });
@@ -145,7 +145,7 @@ export default function CreateListing() {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least one image");
       if (+formData.regularPrice < +formData.discountPrice)
-        return setError("Discount price must be lower than regular price");
+        return setError('price should be less than price without discount');
       setLoading(true);
       setError(false);
       const res = await fetch("/api/listing/create", {
@@ -278,34 +278,34 @@ export default function CreateListing() {
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                id="regularPrice"
+                id="discountPrice"
                 min="10"
                 max="100000"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
-                value={formData.regularPrice}
+                value={formData.discountPrice}
               />
               <div className="flex flex-col items-center">
-                <p>Regular price</p>
-                <span className="text-xs">(Rs / Hours)</span>
+                <p> price</p>
+                <span className="text-xs">(Rs / Days)</span>
               </div>
             </div>
             {formData.offer && (
               <div className="flex items-center gap-2">
                 <input
                   type="number"
-                  id="discountPrice"
+                  id="regularPrice"
                   min="0"
                   max="10000000"
                   required
                   className="p-3 border border-gray-300 rounded-lg"
                   onChange={handleChange}
-                  value={formData.discountPrice}
+                  value={formData.regularPrice}
                 />
                 <div className="flex flex-col items-center">
-                  <p>Discounted price</p>
-                  <span className="text-xs">(Rs / month)</span>
+                  <p>price without Discount</p>
+                  <span className="text-xs">(Rs /Days)</span>
                 </div>
               </div>
             )}

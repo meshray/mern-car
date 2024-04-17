@@ -106,8 +106,9 @@ export default function Search() {
   return (
     <div className='flex flex-col md:flex-row'>
      <div className='p-7  border-b-2 md:border-r-2 md:min-h-screen'>
+     <div className='text-3xl font-semibold border-b text-slate-700 p-2'>Filters:</div>
         <form onSubmit={handleSubmit} className='flex flex-col gap-8' >
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-2 mt-2'>
             <label className='whitespace-nowrap font-semibold'>Search Term:</label>
             <input
               type='text'
@@ -118,7 +119,7 @@ export default function Search() {
               onChange={handleChange}
             />
           </div> 
-
+         
           <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-semibold'>Type:</label>
             <div className='flex gap-2'>

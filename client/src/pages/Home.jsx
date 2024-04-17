@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
+import lottie from 'lottie-web';
+import animationData from '../assets/a1.json';
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
-  const [saleListings, setSaleListings] = useState([]);
-  const [rentListings, setRentListings] = useState([]);
 
   useEffect(() => {
     const fetchOfferListings = async () => {
@@ -13,37 +13,27 @@ export default function Home() {
         const res = await fetch('/api/listing/get?offer=true&limit=4');
         const data = await res.json();
         setOfferListings(data);
-        fetchRentListings();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const fetchRentListings = async () => {
-      try {
-        const res = await fetch('/api/listing/get?type=rent&limit=4');
-        const data = await res.json();
-        setRentListings(data);
-        fetchSaleListings();
       } catch (error) {
         console.log(error);
       }
     };
 
-    const fetchSaleListings = async () => {
-      try {
-        const res = await fetch('/api/listing/get?type=sale&limit=4');
-        const data = await res.json();
-        setSaleListings(data);
-      } catch (error) {
-        log(error);
-      }
-    };
     fetchOfferListings();
   }, []);
 
+  useEffect(() => {
+    const container = document.getElementById('your-animation-container');
+    lottie.loadAnimation({
+      container: container,
+      renderer: 'svg', 
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+    });
+  }, []);
 
   return (
-    <div>
+    <div >
       {/* top */}
       <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto'>
         <h1 className='text-slate-600 font-bold text-3xl lg:text-6xl'>
@@ -62,19 +52,15 @@ export default function Home() {
         >
           Let's get started...
         </Link>
+       
       </div>
-      
-
-
-      
-     <img src="../Animation.png" alt="Animation Coming Soon...." class='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto' />
+      <div id="your-animation-container" className=""></div>
      
 
-     
-     {/* listing results for offer */}
 
-     <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-        {offerListings && offerListings.length > 0 && (
+      {/* listing results for offer */}
+      <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+        {offerListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
@@ -87,8 +73,7 @@ export default function Home() {
             </div>
           </div>
         )}
-      
       </div>
     </div>
-  )
+  );
 }
