@@ -9,8 +9,7 @@ import bookingRouter from './routes/booking.route.js';
 import listingRouter from './routes/listing.route.js';
 import paymentRouter from './routes/payment.route.js';
 import userRouter from './routes/user.route.js';
-// import { default as paymentRouter, default as userRouter } from './routes/payment.route.js';
-
+import path from 'path';
 dotenv.config();
 
 mongoose.connect(process.env.MONGO)
@@ -20,6 +19,7 @@ mongoose.connect(process.env.MONGO)
     .catch((err) => {
         console.log(err);
     })
+const __dirname = path.resolve();
 
 const app = express();
 const allowedOrigins = [
@@ -57,6 +57,11 @@ app.use('/api/booking', bookingRouter);
 app.use('/api/payment', paymentRouter);
 
 
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 
 app.use((err, req, res, next) => {
